@@ -3,7 +3,6 @@ module Login exposing (..)
 import Html exposing (..)
 import Html.Events exposing (..)
 import Html.Attributes exposing (..)
-import Html.App as App
 
 
 -- model
@@ -29,7 +28,6 @@ initModel =
 type Msg
     = UsernameInput String
     | PasswordInput String
-    | Login
 
 
 update : Msg -> Model -> Model
@@ -41,9 +39,6 @@ update msg model =
         PasswordInput password ->
             { model | password = password }
 
-        Login ->
-            initModel
-
 
 
 -- view
@@ -53,7 +48,7 @@ view : Model -> Html Msg
 view model =
     div []
         [ h3 [] [ text "Login" ]
-        , Html.form [ onSubmit Login ]
+        , Html.form []
             [ input
                 [ type' "text"
                 , placeholder "Enter username"
@@ -71,12 +66,3 @@ view model =
                 [ text "Login" ]
             ]
         ]
-
-
-main : Program Never
-main =
-    App.beginnerProgram
-        { model = initModel
-        , update = update
-        , view = view
-        }
