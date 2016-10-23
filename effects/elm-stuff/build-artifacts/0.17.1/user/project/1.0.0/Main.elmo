@@ -1,0 +1,71 @@
+var _user$project$Main$subscriptions = function (model) {
+	return _elm_lang$core$Platform_Sub$none;
+};
+var _user$project$Main$initModel = 'Finding a joke...';
+var _user$project$Main$GetNewJoke = {ctor: 'GetNewJoke'};
+var _user$project$Main$view = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		_elm_lang$core$Native_List.fromArray(
+			[]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				A2(
+				_elm_lang$html$Html$p,
+				_elm_lang$core$Native_List.fromArray(
+					[]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html$text(model)
+					])),
+				A2(
+				_elm_lang$html$Html$hr,
+				_elm_lang$core$Native_List.fromArray(
+					[]),
+				_elm_lang$core$Native_List.fromArray(
+					[])),
+				A2(
+				_elm_lang$html$Html$button,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html_Events$onClick(_user$project$Main$GetNewJoke)
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html$text('Another?')
+					]))
+			]));
+};
+var _user$project$Main$Fail = function (a) {
+	return {ctor: 'Fail', _0: a};
+};
+var _user$project$Main$Joke = function (a) {
+	return {ctor: 'Joke', _0: a};
+};
+var _user$project$Main$randomJoke = function () {
+	var url = 'http://api.icndb.com/jokes/random';
+	var task = _evancz$elm_http$Http$getString(url);
+	var cmd = A3(_elm_lang$core$Task$perform, _user$project$Main$Fail, _user$project$Main$Joke, task);
+	return cmd;
+}();
+var _user$project$Main$init = {ctor: '_Tuple2', _0: _user$project$Main$initModel, _1: _user$project$Main$randomJoke};
+var _user$project$Main$update = F2(
+	function (msg, model) {
+		var _p0 = msg;
+		switch (_p0.ctor) {
+			case 'Joke':
+				return {ctor: '_Tuple2', _0: _p0._0, _1: _elm_lang$core$Platform_Cmd$none};
+			case 'Fail':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Basics$toString(_p0._0),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			default:
+				return {ctor: '_Tuple2', _0: _user$project$Main$initModel, _1: _user$project$Main$randomJoke};
+		}
+	});
+var _user$project$Main$main = {
+	main: _elm_lang$html$Html_App$program(
+		{init: _user$project$Main$init, update: _user$project$Main$update, view: _user$project$Main$view, subscriptions: _user$project$Main$subscriptions})
+};
