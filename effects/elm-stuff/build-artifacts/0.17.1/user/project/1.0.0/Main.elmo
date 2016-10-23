@@ -2,6 +2,23 @@ var _user$project$Main$subscriptions = function (model) {
 	return _elm_lang$core$Platform_Sub$none;
 };
 var _user$project$Main$initModel = 'Finding a joke...';
+var _user$project$Main$Response = F3(
+	function (a, b, c) {
+		return {id: a, joke: b, categories: c};
+	});
+var _user$project$Main$responseDecoder = A2(
+	_elm_lang$core$Json_Decode$at,
+	_elm_lang$core$Native_List.fromArray(
+		['value']),
+	A4(
+		_elm_lang$core$Json_Decode$object3,
+		_user$project$Main$Response,
+		A2(_elm_lang$core$Json_Decode_ops[':='], 'id', _elm_lang$core$Json_Decode$int),
+		A2(_elm_lang$core$Json_Decode_ops[':='], 'joke', _elm_lang$core$Json_Decode$string),
+		A2(
+			_elm_lang$core$Json_Decode_ops[':='],
+			'categories',
+			_elm_lang$core$Json_Decode$list(_elm_lang$core$Json_Decode$string))));
 var _user$project$Main$GetNewJoke = {ctor: 'GetNewJoke'};
 var _user$project$Main$view = function (model) {
 	return A2(
@@ -44,14 +61,7 @@ var _user$project$Main$Joke = function (a) {
 };
 var _user$project$Main$randomJoke = function () {
 	var url = 'http://api.icndb.com/jokes/random';
-	var task = A2(
-		_evancz$elm_http$Http$get,
-		A2(
-			_elm_lang$core$Json_Decode$at,
-			_elm_lang$core$Native_List.fromArray(
-				['value', 'joke']),
-			_elm_lang$core$Json_Decode$string),
-		url);
+	var task = A2(_evancz$elm_http$Http$get, _user$project$Main$responseDecoder, url);
 	var cmd = A3(_elm_lang$core$Task$perform, _user$project$Main$Fail, _user$project$Main$Joke, task);
 	return cmd;
 }();
@@ -61,7 +71,15 @@ var _user$project$Main$update = F2(
 		var _p0 = msg;
 		switch (_p0.ctor) {
 			case 'Joke':
-				return {ctor: '_Tuple2', _0: _p0._0, _1: _elm_lang$core$Platform_Cmd$none};
+				var _p1 = _p0._0;
+				return {
+					ctor: '_Tuple2',
+					_0: A2(
+						_elm_lang$core$Basics_ops['++'],
+						_elm_lang$core$Basics$toString(_p1.id),
+						A2(_elm_lang$core$Basics_ops['++'], ' ', _p1.joke)),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
 			case 'Fail':
 				return {
 					ctor: '_Tuple2',
