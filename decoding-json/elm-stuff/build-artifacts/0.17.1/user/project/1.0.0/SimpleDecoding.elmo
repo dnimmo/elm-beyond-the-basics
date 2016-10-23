@@ -1,0 +1,17 @@
+var _user$project$SimpleDecoding$decoder = A2(
+	_elm_lang$core$Json_Decode$at,
+	_elm_lang$core$Native_List.fromArray(
+		['value', 'joke']),
+	_elm_lang$core$Json_Decode$string);
+var _user$project$SimpleDecoding$json = '\n    {\n        \"type\": \"success\",\n        \"value\": {\n            \"id\": 496,\n            \"joke\": \"Chuck Norris doesn\'t wear a watch, HE decides what time it is\",\n            \"categories\":[\n                \"nerdy\"\n            ]\n        }\n    }\n    ';
+var _user$project$SimpleDecoding$jokeResult = A2(_elm_lang$core$Json_Decode$decodeString, _user$project$SimpleDecoding$decoder, _user$project$SimpleDecoding$json);
+var _user$project$SimpleDecoding$main = {
+	main: function () {
+		var _p0 = _user$project$SimpleDecoding$jokeResult;
+		if (_p0.ctor === 'Ok') {
+			return _elm_lang$html$Html$text(_p0._0);
+		} else {
+			return _elm_lang$html$Html$text(_p0._0);
+		}
+	}()
+};
