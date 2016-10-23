@@ -6,6 +6,7 @@ import Html.Attributes exposing (..)
 import Html.App as App
 import Http
 import Task
+import Json.Decode exposing (..)
 
 
 -- model
@@ -32,7 +33,7 @@ randomJoke =
             "http://api.icndb.com/jokes/random"
 
         task =
-            Http.getString url
+            Http.get (at [ "value", "joke" ] string) url
 
         cmd =
             Task.perform Fail Joke task
